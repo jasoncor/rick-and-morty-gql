@@ -18,7 +18,7 @@ import {
   TableRow,
   TableHead,
 } from "@/components/ui/table";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Pagination } from "@/components/Pagination";
 import { GenericError } from "@/components/GenericError";
 import { HiUserGroup } from "react-icons/hi";
@@ -72,10 +72,11 @@ const columns = [
 ];
 
 export const CharacterList = () => {
-  const { page } = useParams();
+  // get page from query param
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   // TODO: Handle if the page from the URL is not beyond the total pages
-  const currentPage = Number(page) || 1;
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   const { loading, error, data, fetchMore } = useQuery<
     CharactersData,
@@ -95,7 +96,9 @@ export const CharacterList = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    navigate(`/page/${newPage}`);
+    // update the query param
+    searchParams.set("page", newPage.toString());
+    navigate(`?${searchParams.toString()}`);
   };
 
   const table = useReactTable({

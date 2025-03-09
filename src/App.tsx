@@ -1,11 +1,6 @@
 import "./App.css";
 import { CharacterList } from "./components/CharacterList";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -15,8 +10,7 @@ function App() {
           Rick and Morty Characters
         </h1>
         <Routes>
-          <Route path="/page/:page" element={<CharacterList />} />
-          <Route path="/" element={<Navigate to="/page/1" replace />} />
+          <Route path="/" element={<CharacterList />} />
         </Routes>
       </div>
     </Router>

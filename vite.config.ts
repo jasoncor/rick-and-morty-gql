@@ -21,7 +21,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: "/rick-and-morty-gql/",
+  base: "/rick-and-morty-gql",
   test: {
     globals: true,
     environment: "jsdom",
