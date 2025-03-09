@@ -1,6 +1,7 @@
 import { BiErrorCircle } from "react-icons/bi";
 
 interface ErrorProps {
+  /** The error object */
   error: Error;
 }
 

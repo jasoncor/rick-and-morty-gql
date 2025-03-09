@@ -1,3 +1,7 @@
+"use no memo";
+
+// Needs 'use no memo' due to https://github.com/TanStack/table/issues/5567
+
 import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/client/react";
 import {
@@ -13,12 +17,13 @@ import {
   TableHeader,
   TableRow,
   TableHead,
-} from "./ui/table";
-import { useState } from "react";
-import { Pagination } from "./Pagination";
-import { GenericError } from "./GenericError";
+} from "@/components/ui/table";
+import { useParams, useNavigate } from "react-router-dom";
+import { Pagination } from "@/components/Pagination";
+import { GenericError } from "@/components/GenericError";
 import { HiUserGroup } from "react-icons/hi";
 
+// TODO: Use graphql codegen to generate the types
 interface GetCharactersVariables {
   page?: number;
 }
@@ -67,7 +72,10 @@ const columns = [
 ];
 
 export const CharacterList = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const { page } = useParams();
+  const navigate = useNavigate();
+  // TODO: Handle if the page from the URL is not beyond the total pages
+  const currentPage = Number(page) || 1;
 
   const { loading, error, data, fetchMore } = useQuery<
     CharactersData,
@@ -87,7 +95,7 @@ export const CharacterList = () => {
   };
 
   const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
+    navigate(`/page/${newPage}`);
   };
 
   const table = useReactTable({
@@ -96,6 +104,7 @@ export const CharacterList = () => {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  // handle loading
   if (loading)
     return (
       <div className="space-y-4 w-full">
@@ -150,9 +159,12 @@ export const CharacterList = () => {
       </div>
     );
 
+  // handle error
   if (error) return <GenericError error={error} />;
 
-  if (!data)
+  // handle no characters found for a given page
+  // this is currently handling the case where the page is beyond the total pages
+  if (!data || data.characters.results.length === 0)
     return (
       <div className="flex flex-col items-center justify-center p-12 bg-gray-50 rounded-lg border border-gray-200 min-h-[600px]">
         <div className="text-gray-400 mb-6">
@@ -168,6 +180,7 @@ export const CharacterList = () => {
       </div>
     );
 
+  // render characters for the current page
   return (
     <div className="space-y-4 w-full">
       <div className="rounded-md border min-h-[600px]">
@@ -220,11 +233,11 @@ export const CharacterList = () => {
         </Table>
       </div>
 
-      <div className="mt-15">
+      <div>
         <Pagination
           currentPage={currentPage}
           totalPages={data?.characters.info.pages || 0}
-          fetchNext={handleFetchNext}
+          prefetchNext={handleFetchNext}
           onPageChange={handlePageChange}
           loading={loading}
         />
@@ -233,7 +246,7 @@ export const CharacterList = () => {
   );
 };
 
-const GET_CHARACTERS = gql`
+export const GET_CHARACTERS = gql`
   query GetCharacters($page: Int) {
     characters(page: $page) {
       info {

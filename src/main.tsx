@@ -6,15 +6,7 @@ import App from "./App";
 
 const client = new ApolloClient({
   uri: "https://rickandmortyapi.com/graphql",
-  cache: new InMemoryCache({
-    typePolicies: {
-      Query: {
-        fields: {
-          characters: { keyArgs: ["page"] },
-        },
-      },
-    },
-  }),
+  cache: new InMemoryCache({}),
   connectToDevTools: true,
 });
 

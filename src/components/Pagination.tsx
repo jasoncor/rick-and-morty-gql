@@ -1,9 +1,14 @@
 interface PaginationProps {
+  /** The current active page number */
   currentPage: number;
+  /** The total number of available pages */
   totalPages: number;
+  /** Callback function triggered when the page number changes */
   onPageChange: (page: number) => void;
+  /** Whether data is currently being fetched */
   loading: boolean;
-  fetchNext: (page: number) => void;
+  /** Callback function to prefetch the next page's data */
+  prefetchNext?: (page: number) => void;
 }
 
 export const Pagination = ({
@@ -11,7 +16,7 @@ export const Pagination = ({
   totalPages,
   onPageChange,
   loading,
-  fetchNext,
+  prefetchNext,
 }: PaginationProps) => {
   return (
     <div className="flex items-center justify-between px-2">
@@ -19,6 +24,7 @@ export const Pagination = ({
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1 || loading}
         className="disabled:opacity-50"
+        data-testid="previous-button"
       >
         Previous
       </button>
@@ -27,9 +33,12 @@ export const Pagination = ({
       </span>
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
-        onMouseOver={() => fetchNext(Math.min(totalPages, currentPage + 1))}
-        disabled={currentPage === totalPages || loading}
+        onMouseOver={() =>
+          prefetchNext?.(Math.min(totalPages, currentPage + 1))
+        }
+        disabled={currentPage >= totalPages || loading}
         className="disabled:opacity-50"
+        data-testid="next-button"
       >
         Next
       </button>
