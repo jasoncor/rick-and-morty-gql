@@ -36,6 +36,12 @@ npm run dev
 
 This starts the development server with hot-reload enabled. Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
+#### Running Tests
+
+```bash
+npm run test
+```
+
 ### Build for Production
 
 ```bash
