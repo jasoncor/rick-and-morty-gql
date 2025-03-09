@@ -2,20 +2,12 @@
 
 A simple React application that displays a list of Rick and Morty characters using GraphQL.
 
-## Prerequisites
-
-Before you begin, ensure you have the following installed:
-
-- Node.js (v18 or higher)
-- npm
-
 ## Getting Started
 
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd <project-directory>
+git clone https://github.com/jasoncor/rick-and-morty-gql.git
 ```
 
 2. Install dependencies:
@@ -36,7 +28,7 @@ npm run dev
 
 This starts the development server with hot-reload enabled. Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
 
-#### Running Tests
+### Running Tests
 
 ```bash
 npm run test
