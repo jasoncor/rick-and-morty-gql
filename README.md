@@ -2,6 +2,8 @@
 
 A simple React application that displays a list of Rick and Morty characters using GraphQL.
 
+You can view the live site at https://jasoncor.github.io/rick-and-morty-gql/
+
 ## Getting Started
 
 1. Clone the repository:
