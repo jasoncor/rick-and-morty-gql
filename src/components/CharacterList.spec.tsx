@@ -160,6 +160,6 @@ describe("CharacterList", () => {
     // Navigate to next page
     fireEvent.click(nextButton);
 
-    expect(mockNavigate).toHaveBeenCalledWith("/page/2");
+    expect(mockNavigate).toHaveBeenCalledWith("?page=2");
   });
 });
