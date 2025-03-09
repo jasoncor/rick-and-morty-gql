@@ -146,10 +146,7 @@ Please change the parent <Route path="${T}"> to <Route path="${T==="/"?"*":`${T}
   query GetCharacters($page: Int) {
     characters(page: $page) {
       info {
-        count
         pages
-        next
-        prev
       }
       results {
         name
